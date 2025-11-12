@@ -5,3 +5,26 @@ export const getBooks = async () => {
     return rows;
 }
 
+export const insertBook = async (title, genre, status) => {
+    const [result] = await pool.query(
+        "INSERT INTO tblbook (title, genre, status) VALUES (?, ?, ?)",
+        [title, genre, status]
+
+    );
+    return result.insertId;
+    }
+
+    export const updateBookStatus = async (title, genre, status, bookId) => {
+        const [result] = await pool.query(
+            "UPDATE tblbook SET title = ?, genre = ?, status = ? WHERE bookId = ?",
+            [title, genre, status, bookId]
+        );
+        return result.affectedRows;
+    }
+
+    export const deleteBook = async (bookId) => {
+        const [result] = await pool.query(
+            "DELETE FROM tblbook WHERE bookId = ?",
+        );
+        return result.affectedRows;
+    }
